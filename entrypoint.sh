@@ -56,21 +56,6 @@ printf "ShadowSocks version: $(ss-server --help | head -n 2 | tail -n 1 | cut -d
 ############################################
 [ "$PORT_FORWARDING" == "false" ] && PORT_FORWARDING=on
 [ "$PORT_FORWARDING" == "true" ] && PORT_FORWARDING=off
-if [ -z $TINYPROXY ] && [ ! -z $PROXY ]; then
-  TINYPROXY=$PROXY
-fi
-if [ -z $TINYPROXY_LOG ] && [ ! -z $PROXY_LOG_LEVEL ]; then
-  TINYPROXY_LOG=$PROXY_LOG_LEVEL
-fi
-if [ -z $TINYPROXY_PORT ] && [ ! -z $PROXY_PORT ]; then
-  TINYPROXY_PORT=$PROXY_PORT
-fi
-if [ -z $TINYPROXY_USER ] && [ ! -z $PROXY_USER ]; then
-  TINYPROXY_USER=$PROXY_USER
-fi
-if [ -z $TINYPROXY_PASSWORD ] && [ ! -z $PROXY_PASSWORD ]; then
-  TINYPROXY_PASSWORD=$PROXY_PASSWORD
-fi
 
 ############################################
 # CHECK PARAMETERS
@@ -124,17 +109,6 @@ if [ "$DOT" = "on" ]; then
 fi
 printf "Local network parameters:\n"
 printf " * Extra subnets: $EXTRA_SUBNETS\n"
-printf " * Tinyproxy HTTP proxy: $TINYPROXY\n"
-if [ "$TINYPROXY" == "on" ]; then
-  printf " * Tinyproxy port: $TINYPROXY_PORT\n"
-  tinyproxy_auth=yes
-  if [ -z $TINYPROXY_USER ]; then
-    tinyproxy_auth=no
-  fi
-  printf " * Tinyproxy has authentication: $tinyproxy_auth\n"
-  unset -v tinyproxy_auth
-fi
-printf " * ShadowSocks SOCKS5 proxy: $SHADOWSOCKS\n"
 printf "PIA parameters:\n"
 printf " * Remote port forwarding: $PORT_FORWARDING\n"
 [ "$PORT_FORWARDING" == "on" ] && printf " * Remote port forwarding status file: $PORT_FORWARDING_STATUS_FILE\n"
